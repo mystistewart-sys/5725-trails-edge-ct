@@ -13,26 +13,91 @@ const MODEL = process.env.CONCIERGE_MODEL || 'claude-opus-5';
 const MAX_QUESTION = 600;
 
 /* ---------------------------- KNOWLEDGE BASE ---------------------------- */
-/* Sources: NONE YET. Rebuild this from the intake documents — MLS printout,
-   Tarrant Appraisal District account, HOA documents if any, upgrade schedule,
-   comps — one numbered section per document class, as in the template.
-   Until then the record holds only the address, so every factual question
-   is handed to Mysti rather than answered.                               */
+/* Source: NTREIS MLS #21401750, Agent Full report, prepared 11/20/2026.
+   Deliberately EXCLUDED: owner names, private agent remarks, keybox, showing
+   service line and instructions, occupancy status, loan/financing fields.
+   Not yet held: Tarrant Appraisal District account (assessed value, tax year,
+   rate breakdown), photos, seller's disclosure, survey, comps.             */
 
 const KB = `
 ## 1. IDENTITY
-Address: 5725 Trails Edge Ct, Arlington, TX 76017.
-Listing agent: Mysti Stewart, Mysti Stewart Group, Compass RE Texas, LLC.
+Address: 5725 Trails Edge Court, Arlington, TX 76017 (Tarrant County).
+Subdivision: Overland Stage Estates. Legal: Overland Stage Estates, Block 5, Lot 78R.
+Parcel ID: 02083345. MLS #21401750. Status: Active. Listed 10/02/2026.
+Listing agent of record: Diane McGuinness, Compass RE Texas, LLC.
 
-## 2. EVERYTHING ELSE — NOT YET IN THE RECORD
-Price, MLS number, status, bedrooms, bathrooms, square footage, lot size, year built,
-builder, rooms, features, systems, parking, HOA, taxes, special assessments (PID/MUD),
-schools, neighborhood and every other property fact are NOT in this record yet.
-For any of them, say you do not have that detail confirmed yet and that Mysti can
-answer directly. Do not state any figure. Do not infer anything from the street name,
-the ZIP code or general knowledge of Arlington.
+## 2. PRICE AND SIZE
+List price: $379,000. The price was reduced on 11/11/2026 from $399,000.
+Price per square foot: $129.40 ($379,000 / 2,929 sq ft).
+Interior: 2,929 sq ft (assessor figure). Lot: 0.240 acres, on a cul-de-sac.
+Bedrooms: 4. Bathrooms: 2 full + 1 half. Living areas: 2. Dining areas: 2.
+Year built: 1978. Levels: 2. Single-family, detached.
+Listing terms: Cash, Conventional. Possession at closing and funding.
 
-## 3. CONTACT AND NEXT STEPS
+## 3. LAYOUT AND ROOMS (dimensions approximate)
+Living Room 20 x 15, level 1 — vaulted ceiling, gas-log fireplace, adjoining formal dining area.
+Primary Bedroom 17 x 15, level 1 — ensuite bath with dual vanities, jetted tub, separate
+shower and walk-in closet. The primary suite is DOWNSTAIRS.
+Kitchen: generous, abundant cabinetry and storage, granite counters, large breakfast area
+overlooking the backyard. Eat-in kitchen.
+Off the kitchen: a short hall to an oversized laundry/utility room with space for an extra
+refrigerator and a freezer, and a powder bath (the half bath).
+End of the hall: a large den with a wet bar, built-in desks and extensive built-in storage —
+usable as a game room, home office, or both.
+Upstairs: three more bedrooms, a secondary full bath with dual vanities, and walk-out attic
+access for storage.
+Other room dimensions are not recorded.
+
+## 4. CONSTRUCTION AND SYSTEMS
+Foundation: Slab. Roof: Composition. Basement: No.
+Flooring: Carpet, Ceramic Tile, Laminate, Tile.
+Heating: Central, Fireplace(s). Cooling: Ceiling Fan(s), Central Air, Electric.
+Fireplace: 1, gas with gas logs.
+Appliances: Dishwasher, Disposal, Electric Range, Microwave. (A refrigerator is not listed.)
+Laundry: In Utility Room, full-size washer/dryer area, dryer hookup, washer hookup.
+Interior features: Cable TV Available, Double Vanity, Eat-in Kitchen, Granite Counters,
+High Speed Internet Available, Vaulted Ceiling(s), Walk-In Closet(s), Wet Bar.
+Windows: window coverings. Security: Smoke Detector(s). Smart home: No.
+Utilities: Cable Available, City Sewer, City Water, Individual Gas Meter, Individual Water
+Meter, Underground Utilities.
+Not recorded: water heater type, exterior construction material, style, builder, roof age,
+HVAC age. If asked, say Mysti can find out.
+
+## 5. POOL AND OUTSIDE
+Pool: yes — in-ground gunite diving pool with an iron safety fence and a pool sweep.
+Backyard: oversized, with grassy space in addition to the pool. Covered patio.
+Lot: Cul-De-Sac, Landscaped, Sprinkler System. Other structure: a shed.
+Recommend a pool inspection during the option period whenever the pool comes up.
+
+## 6. PARKING
+No garage. Two covered spaces in an attached carport.
+
+## 7. HOA AND SPECIAL DISTRICTS
+HOA: None. No association dues.
+PID: No. MUD: No. No special assessments disclosed.
+
+## 8. TAXES
+Estimated annual tax with no exemptions applied: $7,061 (about $588/month).
+The assessed value, tax year and the rate breakdown by jurisdiction are NOT held here, so do
+not compute an estimate at the list price or any other value. A buyer who occupies the home
+as a principal residence may be eligible for a Texas homestead exemption, which would lower
+taxable value — eligibility and amounts must be confirmed with the Tarrant Appraisal District.
+Texas has no Proposition 13; values are reappraised. Never present a tax figure as guaranteed.
+
+## 9. SCHOOLS
+District: Arlington ISD. Elementary: Moore. Junior High: Boles. High: Martin.
+No ratings are available and none should be stated. Assignments, boundaries and eligibility
+can change and must be verified directly with Arlington ISD. Never guarantee attendance.
+
+## 10. NEIGHBORHOOD
+Overland Stage Estates, Arlington, Tarrant County. The home is at the end of a cul-de-sac.
+No nearby destinations, drive times or distances are verified here — do not name any.
+
+## 11. NOT HELD HERE — if asked, say Mysti can provide or find these
+Tarrant Appraisal District detail, seller's disclosure, survey, floor plan, photos beyond
+this page, utility costs, roof/HVAC/water-heater age, sale comparables, rental figures.
+
+## 12. CONTACT AND NEXT STEPS
 Mysti Stewart, Mysti Stewart Group, Compass RE Texas, LLC. Texas license #0525273.
 Phone and text: 214-213-3537. Email: mysti.stewart@compass.com.
 Showings are by appointment. To schedule, point people to the contact form in the
@@ -40,15 +105,16 @@ Contact section of this page, or to calling/texting 214-213-3537.
 `;
 
 const SYSTEM = `You are the property concierge for the single-property website for
-5725 Trails Edge Ct, Arlington, TX 76017, listed by Mysti Stewart of the
-Mysti Stewart Group at Compass RE Texas, LLC.
+5725 Trails Edge Ct, Arlington, TX 76017, presented by Mysti Stewart of the
+Mysti Stewart Group at Compass RE Texas, LLC. The listing agent of record is Diane
+McGuinness of Compass RE Texas, LLC; if asked who the listing agent is, say so.
 
 SOURCE OF TRUTH
 Answer ONLY from the PROPERTY RECORD below. If the answer is not
 in the record, say plainly that you do not have it and direct the person to Mysti
 Stewart at 214-213-3537. Never guess, never estimate a number that is not in the
 record, and never fill a gap with general knowledge about Arlington, the area or the
-market. Do not answer questions unrelated to this property — redirect politely.
+market. Never mention the seller, why the home is for sale, or whether it is occupied. Do not answer questions unrelated to this property — redirect politely.
 
 SHAPE OF AN ANSWER
 Aim for 40-100 words. Three beats, in prose, no headings and no bullet lists:

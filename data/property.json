@@ -2,74 +2,191 @@
   "_meta": {
     "purpose": "Single source of truth for 5725 Trails Edge Ct. Mirror every fact into public/index.html, public/assets/js/main.js and the concierge KB in netlify/functions/concierge.mjs. Not deployed.",
     "sources": [
-      "Address only, from the Compass listing URL supplied by Mysti Stewart on 2026-11-20. The page itself could not be read from the build environment."
+      "NTREIS MLS Agent Full report, MLS# 21401750, prepared 11/20/2026"
     ],
     "confidentialExcluded": [
       "Owner name and mailing address",
       "Keybox number and type",
       "Private agent remarks",
-      "Agent-only showing instructions"
+      "Agent-only showing instructions",
+      "Occupancy status",
+      "Loan / financing fields",
+      "Showing service and instructions"
     ],
     "lastReviewed": "2026-11-20"
   },
   "identity": {
-    "streetAddress": "5725 Trails Edge Ct",
+    "streetAddress": "5725 Trails Edge Court",
     "city": "Arlington",
     "state": "TX",
-    "postalCode": "76017",
-    "county": "[VERIFY] Expected Tarrant County — confirm on the appraisal district account",
-    "appraisalDistrict": "[VERIFY] Expected Tarrant Appraisal District (TAD)",
-    "subdivision": "[VERIFY]",
-    "mapQuery": "5725 Trails Edge Ct, Arlington, TX 76017"
+    "postalCode": "76017-1146",
+    "county": "Tarrant",
+    "appraisalDistrict": "Tarrant Appraisal District (TAD)",
+    "subdivision": "Overland Stage Estates",
+    "mapQuery": "5725 Trails Edge Ct, Arlington, TX 76017",
+    "lot": "78R",
+    "block": "5",
+    "legalDescription": "OVERLAND STAGE ESTATES BLOCK 5 LOT 78R",
+    "displayName": "5725 Trails Edge Ct"
   },
   "listing": {
-    "status": "[VERIFY]",
-    "mlsNumber": "[VERIFY]",
+    "status": "Active",
+    "mlsNumber": "21401750",
     "mlsSource": "NTREIS",
-    "listPrice": null,
-    "listDate": "[VERIFY]",
-    "publicRemarks": "[VERIFY] Paste the MLS public remarks verbatim"
+    "listPrice": 379000,
+    "listDate": "2026-10-02",
+    "publicRemarks": "Beautifully maintained, four-bedroom home tucked away at the end of a quiet cul-de-sac on an oversized lot with a gorgeous diving pool! Step inside to a spacious living room with soaring vaulted ceilings, complemented by an adjoining formal dining area. The generous kitchen offers abundant cabinetry and storage along with a large breakfast area overlooking the backyard. Just off the kitchen, a short hallway leads to an oversized laundry room with plenty of space for an additional refrigerator and a freezer, as well as a convenient powder bath. At the end of the hall, discover an expansive and versatile den featuring a wet bar, built-in desks, and extensive built-in storage—an ideal space for entertaining, a game room, home office, or combination of all three. The primary suite is conveniently located downstairs and features an ensuite bath with dual vanities, a jetted tub, separate shower, and spacious walk-in closet. Upstairs are three additional bedrooms, a secondary bath with dual vanities, and convenient walk-out attic access providing excellent storage. Outside, the oversized backyard offers the best of both worlds with plenty of grassy space plus a large diving pool with an iron safety fence. With its flexible living spaces, abundant storage, generous lot, and inviting backyard, this home offers plenty of room to live, work, entertain, and enjoy.",
+    "originalListPrice": 399000,
+    "priceReducedOn": "2026-11-11",
+    "pricePerSqFt": 129.4,
+    "daysOnMarket": 49,
+    "listingTerms": "Cash, Conventional",
+    "possession": "Closing/Funding",
+    "listType": "Exclusive Right To Sell",
+    "listingAgentOfRecord": "Diane McGuinness (TX 0667532), Compass RE Texas, LLC"
   },
   "structure": {
-    "propertySubType": "[VERIFY]",
-    "bedrooms": null,
-    "bathroomsFull": null,
-    "bathroomsHalf": null,
-    "squareFeet": null,
-    "squareFeetSource": "[VERIFY]",
-    "yearBuilt": null,
-    "builder": "[VERIFY]",
-    "stories": null,
-    "lotSize": "[VERIFY]"
-  },
-  "rooms": [],
-  "parking": { "garageSpaces": null, "description": [] },
-  "hoa": { "required": "[VERIFY]", "duesAmount": null, "duesFrequency": "[VERIFY]", "managementCompany": "[VERIFY]", "includes": [] },
-  "taxes": {
-    "parcelId": "[VERIFY]",
-    "taxYear": null,
-    "marketValue": null,
-    "exemptions": "[VERIFY]",
-    "combinedRatePct": null,
-    "jurisdictions": [],
-    "specialAssessments": "[VERIFY] PID / MUD status",
-    "notes": [
-      "Texas has no Proposition 13-style cap for a new buyer; the homestead cap (10% a year) applies only once a buyer files a homestead exemption. Never present a tax figure as guaranteed."
+    "propertySubType": "Single Family",
+    "housingType": "Single Detached",
+    "bedrooms": 4,
+    "bathroomsFull": 2,
+    "bathroomsHalf": 1,
+    "livingAreas": 2,
+    "diningAreas": 2,
+    "squareFeet": 2929,
+    "squareFeetSource": "Assessor",
+    "yearBuilt": 1978,
+    "builder": "[VERIFY] Not recorded",
+    "style": "[VERIFY] Not recorded",
+    "construction": "[VERIFY] Not recorded",
+    "stories": 2,
+    "lotAcres": 0.24,
+    "foundation": "Slab",
+    "roof": "Composition",
+    "basement": false,
+    "flooring": "Carpet, Ceramic Tile, Laminate, Tile",
+    "heating": "Central, Fireplace(s)",
+    "cooling": "Ceiling Fan(s), Central Air, Electric",
+    "waterHeater": "[VERIFY] Not recorded",
+    "fireplaces": 1,
+    "fireplaceType": "Gas, Gas Logs",
+    "pool": true,
+    "poolFeatures": [
+      "Fenced",
+      "Gunite",
+      "In Ground",
+      "Pool Sweep"
     ]
   },
-  "schools": { "district": "[VERIFY] Confirm the district by address, not by ZIP code", "elementary": "[VERIFY]", "middle": "[VERIFY]", "high": "[VERIFY]" },
+  "rooms": [
+    {
+      "name": "Primary Bedroom",
+      "dimensions": "17 x 15",
+      "level": 1
+    },
+    {
+      "name": "Living Room",
+      "dimensions": "20 x 15",
+      "level": 1
+    }
+  ],
+  "parking": {
+    "garageSpaces": 0,
+    "carportSpaces": 2,
+    "coveredSpaces": 2,
+    "description": [
+      "Attached Carport",
+      "Covered",
+      "No Garage"
+    ]
+  },
+  "hoa": {
+    "required": "None"
+  },
+  "taxes": {
+    "parcelId": "02083345",
+    "taxYear": "[VERIFY] from TAD",
+    "marketValue": "[VERIFY] from TAD",
+    "exemptions": "[VERIFY]",
+    "combinedRatePct": "[VERIFY] from TAD",
+    "jurisdictions": [],
+    "specialAssessments": "PID: No. MUD: No.",
+    "notes": [
+      "Texas has no Proposition 13-style cap for a new buyer; the homestead cap (10% a year) applies only once a buyer files a homestead exemption. Never present a tax figure as guaranteed."
+    ],
+    "unexemptTaxMls": 7061,
+    "unexemptTaxMonthly": 588
+  },
+  "schools": {
+    "district": "Arlington ISD",
+    "elementary": "Moore",
+    "juniorHigh": "Boles",
+    "high": "Martin",
+    "ratings": "Not provided — none published.",
+    "disclaimer": "Verify directly with Arlington ISD."
+  },
   "highlights": [],
-  "marketing": { "headline": "[VERIFY]", "pullQuote": "[VERIFY]" },
+  "marketing": {
+    "headline": "Room to live, work and entertain — with the pool already in the backyard.",
+    "pullQuote": "Plenty of room to live, work, entertain, and enjoy.",
+    "pullQuoteSource": "Final sentence of the MLS public remarks"
+  },
   "notProvided": [
-    "MLS printout (agent full report)",
     "Tarrant Appraisal District account / tax statement",
     "Photography and hero image",
-    "HOA documents, if an association applies",
     "Upgrade schedule",
     "Sale and lease comparables",
     "Floor plan, Matterport, video",
     "Seller's disclosure, survey",
     "Booking calendar links",
-    "GA4 measurement ID for this property (the ID supplied, G-QGLE2JPPNS, is already live on 1614 Hubert St)"
-  ]
+    "GA4 measurement ID for this property (the ID supplied, G-QGLE2JPPNS, is already live on 1614 Hubert St)",
+    "Nearby destinations / major roads for the neighborhood section",
+    "Water heater, construction material, style, builder (blank in MLS)"
+  ],
+  "features": {
+    "appliances": [
+      "Dishwasher",
+      "Disposal",
+      "Electric Range",
+      "Microwave"
+    ],
+    "laundry": [
+      "In Utility Room",
+      "W/D - Full Size W/D Area",
+      "Dryer Hookup",
+      "Washer Hookup"
+    ],
+    "interior": [
+      "Cable TV Available",
+      "Double Vanity",
+      "Eat-in Kitchen",
+      "Granite Counters",
+      "High Speed Internet Available",
+      "Vaulted Ceiling(s)",
+      "Walk-In Closet(s)",
+      "Wet Bar"
+    ],
+    "security": [
+      "Smoke Detector(s)"
+    ],
+    "patioPorch": "Covered",
+    "windows": "Window Coverings",
+    "lotDescription": [
+      "Cul-De-Sac",
+      "Landscaped",
+      "Sprinkler System"
+    ],
+    "otherStructures": [
+      "Shed(s)"
+    ],
+    "utilities": [
+      "Cable Available",
+      "City Sewer",
+      "City Water",
+      "Individual Gas Meter",
+      "Individual Water Meter",
+      "Underground Utilities"
+    ],
+    "smartHome": false
+  }
 }

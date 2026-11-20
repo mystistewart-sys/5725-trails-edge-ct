@@ -23,15 +23,16 @@ const FACT = {
   /* null = not yet supplied. Checks that depend on a null fact report SKIP
      rather than PASS, so a pending build can never read as a verified one.
      Fill each value from the intake documents as it arrives. */
-  price: null,
-  sqft: null,
+  price: 379000,
+  sqft: 2929,
   taxRate: null,                      // combined rate per $1, from the TAD account
   assessed: null,
   annualTaxOnAssessed: null,
   jurisdictions: [],
-  hoaMonthly: null,
-  beds: null, fullBaths: null, halfBaths: null,
-  mls: null,
+  hoaMonthly: null,                   // no HOA on this property
+  mlsUnexemptTax: 7061,               // MLS 'Unexmpt Tx' — annual, no exemptions
+  beds: 4, fullBaths: 2, halfBaths: 1,
+  mls: '21401750',
   ga4: '',                            // THIS property's own ID — never another listing's
   sage: 'rgb(164, 183, 162)',
 };
@@ -156,6 +157,23 @@ await t('the five jurisdiction amounts sum to the same total', async () => {
 }, [FACT.jurisdictions, FACT.annualTaxOnAssessed]);
 await t(`HOA shown as ${usd0(FACT.hoaMonthly)} / month`, async () =>
   (await page.locator('.cost__fig').first().innerText()).includes(usd0(FACT.hoaMonthly)), [FACT.hoaMonthly]);
+
+await t('property tax card shows the MLS figure and its monthly equivalent', async () => {
+  const cell = await page.evaluate(() => [...document.querySelectorAll('.cost__cell')]
+    .find((c) => /Property Tax/.test(c.querySelector('h3').textContent)).innerText);
+  const a = usd0(FACT.mlsUnexemptTax), m = usd0(FACT.mlsUnexemptTax / 12);
+  return (cell.includes(a) && cell.includes(m)) || `expected ${a} and ${m}`;
+}, [FACT.mlsUnexemptTax]);
+
+section('privacy');
+await t('no confidential MLS field reaches the page source', async () => {
+  // Owner surname, private remarks, keybox brand, showing service and its line,
+  // and occupancy status are in the agent report and must never be published.
+  const html = (await page.content()).toLowerCase();
+  const leaks = ['beaty', 'daughter in law', 'supra', 'brokerbay', '257-1242', 'vacant']
+    .filter((w) => html.includes(w));
+  return leaks.length === 0 || `found: ${leaks.join(', ')}`;
+});
 
 section('core property facts');
 await t(`beds and baths read ${FACT.beds} / ${FACT.fullBaths} full · ${FACT.halfBaths} half`, async () =>

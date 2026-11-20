@@ -61,7 +61,7 @@
   loadAnalytics();
 
   function track(name, params) {
-    var data = Object.assign({ event: name, property: '5725-trails-edge-ct', mls: '' }, params || {});
+    var data = Object.assign({ event: name, property: '5725-trails-edge-ct', mls: '21401750' }, params || {});
     window.dataLayer.push(data);
     if (typeof window.gtag === 'function') {
       window.gtag('event', name, data);
@@ -132,11 +132,18 @@
   }
 
   /* --------------------------- Highlights ---------------------------- */
-  /* [VERIFY] Eight highlights, each drawn from the MLS remarks, the room list or
-     the upgrade schedule. Placeholders until the intake documents arrive. */
-  var HIGHLIGHTS = [1, 2, 3, 4, 5, 6, 7, 8].map(function (n) {
-    return ['<span class="vfy">[VERIFY]</span> Highlight ' + n, 'Pending the MLS public remarks and upgrade schedule.'];
-  });
+  /* Every highlight is drawn from NTREIS MLS #21401750 — the public remarks
+     and the feature fields. Nothing here comes from anywhere else. */
+  var HIGHLIGHTS = [
+    ['A diving pool behind an iron safety fence', 'A large in-ground gunite diving pool with an iron safety fence and a pool sweep, with plenty of grassy space in the oversized backyard.'],
+    ['Quiet cul-de-sac, oversized lot', 'The home sits at the end of a cul-de-sac on 0.24 acres, landscaped and on a sprinkler system.'],
+    ['Primary suite on the main floor', 'A 17 × 15 primary bedroom downstairs, with dual vanities, a jetted tub, a separate shower and a walk-in closet.'],
+    ['A den built for more than one job', 'A large den with a wet bar, built-in desks and extensive built-in storage — game room, home office, or both.'],
+    ['Vaulted living room with a fireplace', 'A 20 × 15 living room under a vaulted ceiling, with a gas-log fireplace, opening to a formal dining area.'],
+    ['Kitchen with a breakfast area', 'Granite counters, plenty of cabinetry and a large breakfast area that looks out over the backyard.'],
+    ['Storage most homes do not have', 'An oversized utility room with space for a second refrigerator and a freezer, a walk-out attic upstairs, and a shed outside.'],
+    ['No HOA, no PID, no MUD', 'No association dues or approvals, and no special district assessments on the tax bill.']
+  ];
   var hlGrid = $('#hlGrid');
   if (hlGrid) {
     hlGrid.innerHTML = HIGHLIGHTS.map(function (h, i) {

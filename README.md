@@ -1,9 +1,10 @@
 # 5725 Trails Edge Ct — Single-Property Website
 
-Site for **5725 Trails Edge Ct, Arlington, TX 76017** (MLS [VERIFY]),
-listed by **Mysti Stewart**, Mysti Stewart Group, Compass RE Texas, LLC.
+Site for **5725 Trails Edge Ct, Arlington, TX 76017** (MLS 21401750),
+presented by **Mysti Stewart**, Mysti Stewart Group, Compass RE Texas, LLC.
+Listing agent of record: Diane McGuinness, Compass RE Texas, LLC.
 
-> **Status: scaffold, facts pending.** Built from the 5710-mccommas-blvd-101
+> **Status: MLS facts in; photos, TAD detail and GA4 pending.** Built from the 5710-mccommas-blvd-101
 > template. Every property fact renders as a red `[VERIFY]` marker until it is
 > sourced from the intake documents, the photos are labelled placeholders, the
 > page is `noindex`, and no analytics load. See `data/property.json` →
@@ -257,8 +258,13 @@ effect with no other change. Until then the fallbacks render.
 
 ## Verified against
 
-Nothing yet beyond the street address, city and ZIP (from the Compass listing
-URL). Expected record sources: NTREIS MLS agent full report and the Tarrant
-Appraisal District account — confirm the county and appraisal district on the
-account itself. The tax section keeps the template's Texas framing (no Prop 13,
-homestead exemption, PID/MUD) with every figure pending.
+- NTREIS MLS #21401750, Agent Full report, prepared 11/20/2026 — every fact on
+  the page and in the concierge KB.
+- Excluded from the site and the KB: owner names, private agent remarks,
+  keybox, showing service and line, occupancy, financing fields
+  (`tests/check.mjs` fails if any of them appears in the page source).
+
+Still pending: Tarrant Appraisal District account (assessed value, tax year,
+rate breakdown — the estimator stays off until then), photography, nearby
+destinations, and the MLS fields left blank (water heater, construction,
+style, builder).
