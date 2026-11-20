@@ -1,5 +1,5 @@
 /* =========================================================================
-   5710 McCommas Blvd #101 — Mysti Stewart Group / Compass RE Texas, LLC
+   5725 Trails Edge Ct — Mysti Stewart Group / Compass RE Texas, LLC
    Brand: sage #a4b7a2 (primary) · deep teal #245d61 (property accent)
    Editorial luxury / modern minimal. No rounded cards, shadows or gradients.
    ========================================================================= */
@@ -471,3 +471,9 @@ body.is-locked .nav,body.is-locked .ai__open{opacity:0;pointer-events:none;visib
   body{font-size:11pt}
   .section{padding-block:18pt}
 }
+
+/* ---------- Pending-content marker ----------
+   Every fact not yet sourced from the property documents renders as [VERIFY]
+   in this style, so a gap is impossible to miss in review. Remove nothing
+   here at launch — once every marker is replaced, this rule matches nothing. */
+.vfy{font-family:var(--font-label);font-size:.82em;font-weight:600;letter-spacing:.04em;color:#8a1c1c;background:#fbeaea;padding:.05em .35em}

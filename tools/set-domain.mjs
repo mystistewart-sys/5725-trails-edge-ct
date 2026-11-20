@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* Point the site at its production domain.
  *
- *   node tools/set-domain.mjs 1614hubertstreet.com
+ *   node tools/set-domain.mjs 5725trailsedge.com
  *   node tools/set-domain.mjs --check          (report, change nothing)
  *
  * The domain is written into the canonical link, the og:/twitter: tags, the
@@ -19,7 +19,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FILES = ['public/index.html', 'public/robots.txt', 'public/sitemap.xml'];
-const PLACEHOLDER = '1614-hubert-st.netlify.app';
+const PLACEHOLDER = '5725-trails-edge-ct.netlify.app';
 
 const arg = process.argv[2];
 if (!arg) {

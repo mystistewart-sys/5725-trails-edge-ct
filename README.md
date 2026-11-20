@@ -1,7 +1,18 @@
-# 5710 McCommas Blvd #101 — Single-Property Website
+# 5725 Trails Edge Ct — Single-Property Website
 
-Production site for **5710 McCommas Blvd, Unit 101, Dallas, TX 75206** (MLS 21312626),
+Site for **5725 Trails Edge Ct, Arlington, TX 76017** (MLS [VERIFY]),
 listed by **Mysti Stewart**, Mysti Stewart Group, Compass RE Texas, LLC.
+
+> **Status: scaffold, facts pending.** Built from the 5710-mccommas-blvd-101
+> template. Every property fact renders as a red `[VERIFY]` marker until it is
+> sourced from the intake documents, the photos are labelled placeholders, the
+> page is `noindex`, and no analytics load. See `data/property.json` →
+> `notProvided` for what is still needed.
+>
+> **Before launch:** fill every `[VERIFY]` (`grep -rn VERIFY public netlify`),
+> set the facts in `tests/check.mjs` so nothing reports SKIP, switch the robots
+> meta back to `index,follow,max-image-preview:large`, add this property's own
+> GA4 snippet, and run `node tools/set-domain.mjs <domain>`.
 
 Static HTML/CSS/JS with one Netlify serverless function for the AI concierge.
 No framework, no build step, no runtime dependencies.
@@ -60,7 +71,7 @@ npx netlify-cli dev
 > It was removed so nothing internal ships in the page source — it lives here now.
 
 
-Search and replace the placeholder domain `5710-mccommas-blvd-101.netlify.app`
+Search and replace the placeholder domain `5725-trails-edge-ct.netlify.app`
 with the real production domain in:
 
 - `public/index.html` — canonical link, all `og:`/`twitter:` tags, and the four
@@ -69,17 +80,18 @@ with the real production domain in:
 - `public/sitemap.xml` — the `<loc>` value
 
 ```bash
-grep -rn '5710-mccommas-blvd-101.netlify.app' public/
+grep -rn '5725-trails-edge-ct.netlify.app' public/
 ```
 
 ---
 
 ## Analytics
 
-GA4 is live with measurement ID **`G-R7X5SELD1R`**, installed as Google's
-standard `gtag.js` snippet in the `<head>` of `public/index.html` — the form
-Tag Assistant expects, and the earliest point it can fire. **To change the
-measurement ID, edit that snippet.**
+GA4 is **not installed yet**. The ID supplied with the intake, `G-QGLE2JPPNS`, is
+already live on 1614 Hubert St, so using it here would merge two listings' traffic.
+Create a GA4 property for 5725 Trails Edge Ct, paste Google's standard `gtag.js`
+snippet into the `<head>` of `public/index.html`, and set `FACT.ga4` in
+`tests/check.mjs`.
 
 It is deliberately not also loaded from JavaScript. Two `gtag('config', ...)`
 calls for the same property double-count every pageview, so a test asserts
@@ -137,7 +149,7 @@ redeploy (Deploys → Trigger deploy → Clear cache and deploy site).
 ### Details
 
 The API key stays server-side. The knowledge base is a curated extract of the
-MLS and DCAD records, organised by document class inside the function — not a raw
+MLS and appraisal-district records, organised by document class inside the function — not a raw
 text dump. It deliberately excludes owner identity, keybox details, private agent
 remarks and the agent-only showing line.
 
@@ -151,7 +163,7 @@ request on the first deploy. Thinking is adaptive and on by default, and thinkin
 tokens count toward `max_tokens`, which is why the cap is 4000 rather than a few
 hundred. If the account rejects `output_config`, the function retries once with a
 minimal body so visitors still get an answer.
-Guardrails: answer only from the record, qualify material facts, flag MLS/DCAD
+Guardrails: answer only from the record, qualify material facts, flag MLS/appraisal-district
 conflicts, never guarantee taxes or school attendance, never claim an unlisted
 amenity, fair-housing and privacy rules.
 
@@ -245,9 +257,8 @@ effect with no other change. Until then the fallbacks render.
 
 ## Verified against
 
-- NTREIS MLS #21312626, Agent Full report, prepared 09/14/2026
-- Dallas Central Appraisal District, account #00C27110000300101, retrieved 04/28/2026
-
-Every tax figure reconciles: $490,000 × 2.22671% = $10,910.88, matching both the
-DCAD total and the MLS unexempt figure, and the five jurisdiction amounts sum to
-the same number.
+Nothing yet beyond the street address, city and ZIP (from the Compass listing
+URL). Expected record sources: NTREIS MLS agent full report and the Tarrant
+Appraisal District account — confirm the county and appraisal district on the
+account itself. The tax section keeps the template's Texas framing (no Prop 13,
+homestead exemption, PID/MUD) with every figure pending.

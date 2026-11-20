@@ -20,25 +20,31 @@ const PUBLIC = path.join(ROOT, 'public');
 
 /* ---- the listing's facts, asserted independently of the page ---- */
 const FACT = {
-  price: 435000,
-  sqft: 1624,
-  taxRate: 0.0222671,                 // combined 2026 Dallas rate per $1
-  assessed: 490000,
-  annualTaxOnAssessed: 10910.88,
-  jurisdictions: [3424.12, 4869.79, 1055.95, 522.22, 1038.80],
-  hoaMonthly: 457,
-  beds: 2, fullBaths: 2, halfBaths: 1,
-  mls: '21312626',
-  ga4: 'G-R7X5SELD1R',
+  /* null = not yet supplied. Checks that depend on a null fact report SKIP
+     rather than PASS, so a pending build can never read as a verified one.
+     Fill each value from the intake documents as it arrives. */
+  price: null,
+  sqft: null,
+  taxRate: null,                      // combined rate per $1, from the TAD account
+  assessed: null,
+  annualTaxOnAssessed: null,
+  jurisdictions: [],
+  hoaMonthly: null,
+  beds: null, fullBaths: null, halfBaths: null,
+  mls: null,
+  ga4: '',                            // THIS property's own ID — never another listing's
   sage: 'rgb(164, 183, 162)',
 };
-const usd0 = (n) => '$' + Math.round(n).toLocaleString('en-US');
+const usd0 = (n) => n == null ? '$—' : '$' + Math.round(n).toLocaleString('en-US');
 
-let pass = 0, fail = 0;
-const t = async (name, fn) => {
+let pass = 0, fail = 0, skip = 0;
+const SKIP = Symbol('skip');
+const t = async (name, fn, needs = []) => {
+  if (needs.some((v) => v == null || (Array.isArray(v) && !v.length))) return t(name, async () => SKIP);
   try {
     const r = await fn();
-    if (r === true) { console.log(`  PASS  ${name}`); pass++; }
+    if (r === SKIP) { console.log(`  SKIP  ${name} (fact pending)`); skip++; }
+    else if (r === true) { console.log(`  PASS  ${name}`); pass++; }
     else { console.log(`  FAIL  ${name}${r ? ' — ' + r : ''}`); fail++; }
   } catch (e) { console.log(`  ERR   ${name}: ${e.message}`); fail++; }
 };
@@ -91,33 +97,33 @@ const specValue = (label) => page.evaluate((l) => {
 
 section('price and every figure derived from it');
 await t(`hero shows ${usd0(FACT.price)}`, async () =>
-  (await txt('.hero__stat dd')).startsWith(usd0(FACT.price)) || `got ${await txt('.hero__stat dd')}`);
+  (await txt('.hero__stat dd')).startsWith(usd0(FACT.price)) || `got ${await txt('.hero__stat dd')}`, [FACT.price]);
 await t(`details price is ${usd0(FACT.price)}`, async () => {
   const v = await specValue('Price'); return v === usd0(FACT.price) || `got ${v}`;
-});
+}, [FACT.price]);
 await t('price per sq ft equals price ÷ square feet', async () => {
   const shown = await specValue('Price per sq ft');
   const want = '$' + (FACT.price / FACT.sqft).toFixed(2);
   return shown === want || `page says ${shown}, price ÷ sqft is ${want}`;
-});
+}, [FACT.price, FACT.sqft]);
 await t('tax estimator defaults to the list price', async () =>
-  (await page.inputValue('#calcPrice')) === usd0(FACT.price) || `got ${await page.inputValue('#calcPrice')}`);
+  (await page.inputValue('#calcPrice')) === usd0(FACT.price) || `got ${await page.inputValue('#calcPrice')}`, [FACT.price, FACT.taxRate]);
 await t('estimator annual figure equals price × combined rate', async () => {
   const shown = (await txt('#calcYear')).trim();
   const want = usd0(FACT.price * FACT.taxRate);
   return shown === want || `page says ${shown}, computed ${want}`;
-});
+}, [FACT.price, FACT.taxRate]);
 await t('estimator monthly figure is the annual ÷ 12', async () => {
   const shown = (await txt('#calcMonth')).trim();
   const want = usd0(FACT.price * FACT.taxRate / 12);
   return shown === want || `page says ${shown}, computed ${want}`;
-});
+}, [FACT.price, FACT.taxRate]);
 await t('structured data carries the same price', async () => {
   const p = await page.evaluate(() => JSON.parse(
     document.querySelector('script[type="application/ld+json"]').textContent)
     ['@graph'].find((n) => n['@type'] === 'Offer').price);
   return p === FACT.price || `JSON-LD says ${p}`;
-});
+}, [FACT.price]);
 await t('meta and social descriptions quote the same price', async () => {
   const m = await page.evaluate(() => [
     document.querySelector('meta[name=description]').content,
@@ -125,12 +131,12 @@ await t('meta and social descriptions quote the same price', async () => {
     document.querySelector('meta[name="twitter:description"]').content,
   ]);
   return m.every((c) => c.includes(usd0(FACT.price))) || 'a description quotes a different price';
-});
+}, [FACT.price]);
 await t('no unexpected six-figure amount (catches a price left behind)', async () => {
   // Every $NNN,NNN on the page must be one we expect. The list price and the
   // assessed value are both legitimate and different from each other; anything
   // else is most likely a figure a price change failed to update.
-  const expected = new Set([FACT.price, FACT.assessed].map((n) => n.toLocaleString('en-US')));
+  const expected = new Set([FACT.price, FACT.assessed].filter((n) => n != null).map((n) => n.toLocaleString('en-US')));
   const found = await page.evaluate(() => {
     const html = document.documentElement.innerHTML;
     return [...html.matchAll(/\$([0-9]{3},[0-9]{3})/g)].map((m) => m[1]);
@@ -143,27 +149,28 @@ section('tax figures reconcile');
 await t('assessed value × rate equals the published annual tax', async () => {
   const got = FACT.assessed * FACT.taxRate;
   return Math.abs(got - FACT.annualTaxOnAssessed) < 0.02 || `computed ${got.toFixed(2)}`;
-});
+}, [FACT.assessed, FACT.taxRate, FACT.annualTaxOnAssessed]);
 await t('the five jurisdiction amounts sum to the same total', async () => {
   const sum = FACT.jurisdictions.reduce((a, b) => a + b, 0);
   return Math.abs(sum - FACT.annualTaxOnAssessed) < 0.02 || `sum is ${sum.toFixed(2)}`;
-});
+}, [FACT.jurisdictions, FACT.annualTaxOnAssessed]);
 await t(`HOA shown as ${usd0(FACT.hoaMonthly)} / month`, async () =>
-  (await page.locator('.cost__fig').first().innerText()).includes(usd0(FACT.hoaMonthly)));
+  (await page.locator('.cost__fig').first().innerText()).includes(usd0(FACT.hoaMonthly)), [FACT.hoaMonthly]);
 
 section('core property facts');
 await t(`beds and baths read ${FACT.beds} / ${FACT.fullBaths} full · ${FACT.halfBaths} half`, async () =>
   (await specValue('Bedrooms')) === String(FACT.beds) &&
-  (await specValue('Baths')).startsWith(`${FACT.fullBaths} full · ${FACT.halfBaths} half`));
-await t(`interior is ${FACT.sqft.toLocaleString('en-US')} sq ft`, async () =>
-  (await specValue('Interior')) === `${FACT.sqft.toLocaleString('en-US')} sq ft`);
-await t(`MLS number is ${FACT.mls}`, async () => (await specValue('MLS number')) === FACT.mls);
+  (await specValue('Baths')).startsWith(`${FACT.fullBaths} full · ${FACT.halfBaths} half`), [FACT.beds, FACT.fullBaths, FACT.halfBaths]);
+await t(`interior is ${(FACT.sqft ?? '—').toLocaleString('en-US')} sq ft`, async () =>
+  (await specValue('Interior')) === `${(FACT.sqft ?? 0).toLocaleString('en-US')} sq ft`, [FACT.sqft]);
+await t(`MLS number is ${FACT.mls}`, async () => (await specValue('MLS number')) === FACT.mls, [FACT.mls]);
 
 section('analytics');
-await t(`GA4 installed exactly once as ${FACT.ga4}`, async () => {
+await t(FACT.ga4 ? `GA4 installed exactly once as ${FACT.ga4}` : 'no analytics tag loads until this property has its own GA4 ID', async () => {
   const scripts = gaRequests.filter((u) => /gtag\/js/.test(u));
   const configs = await page.evaluate(() => (window.dataLayer || [])
     .filter((a) => { try { return a[0] === 'config'; } catch { return false; } }).length);
+  if (!FACT.ga4) return (scripts.length === 0 && configs === 0) || `${scripts.length} script request(s), ${configs} config call(s)`;
   return (scripts.length === 1 && scripts[0].includes(FACT.ga4) && configs === 1)
     || `${scripts.length} script request(s), ${configs} config call(s)`;
 });
@@ -251,5 +258,5 @@ await t('no failed first-party requests or page errors', async () =>
 
 await browser.close();
 if (server) server.close();
-console.log(`\n===== ${pass} passed, ${fail} failed =====`);
+console.log(`\n===== ${pass} passed, ${fail} failed, ${skip} skipped (facts pending) =====`);
 process.exit(fail ? 1 : 0);

@@ -1,5 +1,5 @@
 /* =========================================================================
-   5710 McCommas Blvd #101 — site behaviour
+   5725 Trails Edge Ct — site behaviour
    ========================================================================= */
 (function () {
   'use strict';
@@ -61,7 +61,7 @@
   loadAnalytics();
 
   function track(name, params) {
-    var data = Object.assign({ event: name, property: '5710-mccommas-101', mls: '21312626' }, params || {});
+    var data = Object.assign({ event: name, property: '5725-trails-edge-ct', mls: '' }, params || {});
     window.dataLayer.push(data);
     if (typeof window.gtag === 'function') {
       window.gtag('event', name, data);
@@ -132,16 +132,11 @@
   }
 
   /* --------------------------- Highlights ---------------------------- */
-  var HIGHLIGHTS = [
-    ['Two bedrooms, two ensuite baths', 'Each bedroom has its own full bath, so there is no shared-bath compromise between the primary and the second bedroom.'],
-    ['A separate den, not a converted bedroom', 'A dedicated 9 × 10 den means a home office or studio without giving up the second bedroom.'],
-    ['Single-level, ground-floor living', 'Unit 101 sits on the first floor of a three-story building and is laid out on one level — no interior stairs.'],
-    ['A 28-foot open living space', 'Living, dining and kitchen run together across the main space, with windows on more than one wall.'],
-    ['Gas cooktop kitchen with a large island', 'Gas cooktop under a vented stainless hood, a full stainless appliance suite, tile backsplash and an island with seating.'],
-    ['Polished concrete floors', 'Continuous concrete flooring runs through the living areas — no carpet seams and nothing to refinish.'],
-    ['Two covered underground spaces', 'Two assigned, covered spaces in the building’s underground garage, plus a private covered balcony above street level.'],
-    ['Lock-and-leave ownership', 'The $457 monthly HOA covers building insurance, structural maintenance and management — no roof, yard or exterior punch list.']
-  ];
+  /* [VERIFY] Eight highlights, each drawn from the MLS remarks, the room list or
+     the upgrade schedule. Placeholders until the intake documents arrive. */
+  var HIGHLIGHTS = [1, 2, 3, 4, 5, 6, 7, 8].map(function (n) {
+    return ['<span class="vfy">[VERIFY]</span> Highlight ' + n, 'Pending the MLS public remarks and upgrade schedule.'];
+  });
   var hlGrid = $('#hlGrid');
   if (hlGrid) {
     hlGrid.innerHTML = HIGHLIGHTS.map(function (h, i) {
@@ -152,14 +147,10 @@
   }
 
   /* ----------------------------- Places ------------------------------ */
+  /* [VERIFY] Nearby destinations — only places named in the listing remarks or
+     independently verifiable. No drive times or distances. */
   var PLACES = [
-    ['Greenville Avenue', 'The Lower Greenville restaurant, patio and nightlife corridor.'],
-    ['Mockingbird Station', 'Mixed-use center with shops, dining, a cinema and a DART light rail station.'],
-    ['Granada Theater', 'Historic live music venue on Greenville Avenue.'],
-    ['The M Streets', 'The adjacent residential district known for its Tudor-style homes.'],
-    ['Southern Methodist University', 'Campus just north of the neighborhood, in University Park.'],
-    ['White Rock Lake', 'East Dallas lake with a loop trail and surrounding park land.'],
-    ['US-75 · Central Expressway', 'Primary north-south freeway access, reached by way of Mockingbird Lane.']
+    ['<span class="vfy">[VERIFY]</span>', 'Nearby destinations pending the property intake.']
   ];
   var places = $('#places');
   if (places) {
@@ -170,50 +161,23 @@
 
   /* ----------------------------- Gallery ----------------------------- */
   var CATS = [
-    ['all', 'All 29'],
-    ['living', 'Living & Entry'],
-    ['kitchen', 'Kitchen & Dining'],
-    ['primary', 'Primary Suite'],
-    ['bedbath', 'Bedroom, Den & Baths'],
-    ['outside', 'Outdoor & Building']
+    ['all', 'All photos']
   ];
 
   /* slug, category, short caption, full alt text */
-  var PHOTOS = [
-    ['living-open-plan','living','Living room','Open living room looking through to the dining area and kitchen.'],
-    ['kitchen-island-wide','kitchen','Kitchen island','Kitchen island with seating beneath glass pendant lights.'],
-    ['primary-bedroom','primary','Primary bedroom','Primary bedroom with a window and floor-length drapery.'],
-    ['balcony','outside','Private balcony','Covered private balcony with a wrought iron railing.'],
-    ['kitchen-island','kitchen','Kitchen','Kitchen with island seating, stainless appliances and track lighting.'],
-    ['living-wide','living','Living room','Wide view of the living room, open to the kitchen beyond.'],
-    ['primary-bath-vanity','primary','Primary bath','Primary bath with a double vanity, freestanding tub and closet beyond.'],
-    ['exterior-front','outside','Building exterior','Street view of the Greenwood Flats building at 5710 McCommas Blvd.'],
-    ['living-media','living','Living room','Living room with a media wall and open sightlines.'],
-    ['kitchen-wide','kitchen','Kitchen','Wide view of the kitchen with island, range and window.'],
-    ['primary-bath-shower','primary','Primary bath','Freestanding soaking tub beside a glass-enclosed tiled shower.'],
-    ['bedroom-two','bedbath','Second bedroom','Second bedroom with two beds and a door to its ensuite bath.'],
-    ['living-windows','living','Living room','Living room with windows on two walls.'],
-    ['dining-door','kitchen','Dining area','Dining area beside windows and the door to the covered balcony.'],
-    ['primary-bedroom-ensuite','primary','Primary suite','Primary bedroom with the door to the ensuite bath open.'],
-    ['den-flex','bedbath','Den','The separate den — a flex room off the main hall.'],
-    ['kitchen-sink','kitchen','Kitchen','Kitchen island with undermount sink, looking toward the dining area.'],
-    ['dining','kitchen','Dining area','Dining area with seating for four and natural light.'],
-    ['primary-bedroom-closet','primary','Primary suite','Primary bedroom showing the ensuite bath and closet entries.'],
-    ['aerial-building','outside','Aerial view','Aerial view of the three-story Greenwood Flats building.'],
-    ['living-seating','living','Living room','Living room seating area with windows to the street.'],
-    ['kitchen-range','kitchen','Kitchen','Gas range with a vented stainless hood and tile backsplash.'],
-    ['bath-secondary','bedbath','Second bath','Second full bath with a tub-shower, tile surround and vanity.'],
-    ['entry-hall','living','Entry hall','Entry hall with polished concrete floors leading to the living area.'],
-    ['bedroom-two-alt','bedbath','Second bedroom','Second bedroom with a window and two beds.'],
-    ['den-flex-door','bedbath','Den','The den with its sliding barn door to the hallway.'],
-    ['entry-powder','bedbath','Powder bath','Powder bath off the entry with a pedestal sink.'],
-    ['community-walk','outside','Community','Landscaped walkway between the buildings at Greenwood Flats.'],
-    ['building-corridor','outside','Building corridor','Interior corridor leading to the front door of Unit 101.']
-  ];
+  /* [VERIFY] Twelve labelled placeholder slots until photography is delivered.
+     When it is: rename the slugs to describe each shot, add categories to CATS,
+     map each original in tools/photo-map.txt and run tools/photos.py. */
+  var PHOTOS = [];
+  for (var pn = 1; pn <= 12; pn++) {
+    var pslug = 'photo-' + String(pn).padStart(2, '0');
+    PHOTOS.push([pslug, 'home', 'Photo ' + pn + ' — pending', 'Placeholder for photograph ' + pn + ' of 5725 Trails Edge Ct.']);
+  }
 
   var galBar = $('#galBar'), galGrid = $('#galGrid');
 
   if (galBar && galGrid) {
+    galBar.hidden = CATS.length < 2;
     galBar.innerHTML = CATS.map(function (c, i) {
       return '<button class="chip" type="button" data-cat="' + c[0] + '" aria-pressed="' + (i === 0) + '">' + c[1] + '</button>';
     }).join('');
@@ -317,7 +281,9 @@
   }
 
   /* --------------------------- Tax estimator -------------------------- */
-  var RATE = 0.0222671; /* combined 2026 Dallas rate, 2.22671% */
+  /* [VERIFY] Combined tax rate per $1 of value, from the appraisal district
+     account (sum of every jurisdiction). 0 keeps the estimator inactive. */
+  var RATE = 0;
   var priceEl = $('#calcPrice'), yEl = $('#calcYear'), mEl = $('#calcMonth');
   var usd0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
 
@@ -326,6 +292,7 @@
     var v = parseFloat(String(priceEl.value).replace(/[^0-9.]/g, '')) || 0;
     v = Math.min(v, 100000000);
     var annual = v * RATE;
+    if (!RATE) v = 0;
     yEl.textContent = v ? usd0.format(annual) : '—';
     mEl.textContent = v ? usd0.format(annual / 12) : '—';
   }

@@ -1,4 +1,4 @@
-# Netlify configuration — 5710 McCommas Blvd #101
+# Netlify configuration — 5725 Trails Edge Ct
 # Static site. One build step stamps asset URLs. Concierge under /.netlify/functions/.
 
 [build]

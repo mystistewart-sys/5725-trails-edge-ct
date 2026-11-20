@@ -26,7 +26,7 @@
   },
   "analytics": {
     "_comment": "Leave blank and nothing loads. Never paste another property's IDs.",
-    "ga4": "G-R7X5SELD1R",
+    "ga4": "",
     "googleAds": "",
     "metaPixel": ""
   },
