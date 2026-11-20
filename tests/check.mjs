@@ -224,6 +224,13 @@ await t('every gallery photo loaded', async () => {
     .filter((i) => i.getAttribute('src') && i.complete && i.naturalWidth === 0).length);
   return broken === 0 || `${broken} broken`;
 });
+await t('every altered image carries its disclosure in the caption', async () => {
+  // Five of the seven images are virtually staged or AI-enhanced; only the
+  // pool and side-yard frames are unaltered. Each altered one must say so.
+  const caps = await page.evaluate(() => [...document.querySelectorAll('.gal__item figcaption')].map((c) => c.textContent));
+  const labelled = caps.filter((c) => /Virtually staged|Digitally enhanced/.test(c)).length;
+  return (caps.length === 7 && labelled === 5) || `${caps.length} photos, ${labelled} labelled`;
+});
 await t('lightbox opens and closes on a real click', async () => {
   await page.evaluate(() => document.getElementById('gallery').scrollIntoView());
   await page.waitForTimeout(400);

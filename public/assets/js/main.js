@@ -168,18 +168,24 @@
 
   /* ----------------------------- Gallery ----------------------------- */
   var CATS = [
-    ['all', 'All photos']
+    ['all', 'All 7'],
+    ['inside', 'Inside'],
+    ['outside', 'Outside']
   ];
 
-  /* slug, category, short caption, full alt text */
-  /* [VERIFY] Twelve labelled placeholder slots until photography is delivered.
-     When it is: rename the slugs to describe each shot, add categories to CATS,
-     map each original in tools/photo-map.txt and run tools/photos.py. */
-  var PHOTOS = [];
-  for (var pn = 1; pn <= 12; pn++) {
-    var pslug = 'photo-' + String(pn).padStart(2, '0');
-    PHOTOS.push([pslug, 'home', 'Photo ' + pn + ' — pending', 'Placeholder for photograph ' + pn + ' of 5725 Trails Edge Ct.']);
-  }
+  /* slug, category, short caption, full alt text.
+     Disclosure: every image that was virtually staged or AI-enhanced says so
+     in its caption, which shows on the thumbnail and in the lightbox. Only
+     the pool and side-yard photographs are unaltered camera files. */
+  var PHOTOS = [
+    ['exterior-front',   'outside', 'Front exterior · Digitally enhanced', 'Two-story brick and Tudor-style front elevation with the attached covered carport at right. Image digitally enhanced.'],
+    ['living-fireplace', 'inside',  'Living room · Virtually staged', 'Living room with a vaulted ceiling and a brick gas-log fireplace. Furniture is virtually staged.'],
+    ['living-dining',    'inside',  'Living & dining · Virtually staged', 'Living room looking toward the formal dining area between brick columns. Furniture is virtually staged.'],
+    ['kitchen',          'inside',  'Kitchen · Digitally enhanced', 'Kitchen with granite counters, tile backsplash and built-in cabinetry. Image digitally enhanced.'],
+    ['primary-bedroom',  'inside',  'Primary bedroom · Virtually staged', 'Downstairs primary bedroom with the ensuite bath beyond. Furniture is virtually staged.'],
+    ['pool',             'outside', 'Diving pool', 'In-ground gunite diving pool along the covered patio, inside the iron safety fence.'],
+    ['side-yard',        'outside', 'Side yard', 'Grassy side yard beside the house, looking toward the fenced pool.']
+  ];
 
   var galBar = $('#galBar'), galGrid = $('#galGrid');
 
@@ -190,7 +196,7 @@
     }).join('');
 
     galGrid.innerHTML = PHOTOS.map(function (p, i) {
-      return '<figure style="display:contents"><button class="gal__item" type="button" data-i="' + i + '" data-cat="' + p[1] + '" aria-label="Open photo ' + (i + 1) + ' of ' + PHOTOS.length + ': ' + p[3] + '">' +
+      return '<figure style="display:contents"><button class="gal__item" type="button" data-i="' + i + '" data-cat="' + p[1] + '"' + (/Virtually staged|Digitally enhanced/.test(p[2]) ? ' data-altered' : '') + ' aria-label="Open photo ' + (i + 1) + ' of ' + PHOTOS.length + ': ' + p[3] + '">' +
         '<picture>' +
           '<source type="image/webp" srcset="/assets/img/gallery/' + p[0] + '-t.webp">' +
           '<img src="/assets/img/gallery/' + p[0] + '-t.jpg" width="800" height="533" loading="' + (i < 4 ? 'eager' : 'lazy') + '" decoding="async" alt="' + p[3] + '">' +

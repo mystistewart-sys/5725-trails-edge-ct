@@ -1,0 +1,18 @@
+# Source file -> gallery slug, one per line. Paths relative to the repo root.
+#
+#   python3 tools/photos.py --map tools/photo-map.txt \
+#           --hero assets-source/photos-original/high-res-3-pool.jpg
+#
+# Only high-res-3 and high-res-8 are unaltered camera files (3000px). The
+# ai-* sources were redrawn by an image model at about 1536px; they're
+# captioned as virtually staged or digitally enhanced in main.js.
+# ai-HELD-den-rendering.png is deliberately NOT mapped: it shows a
+# "basement" and the house has none. Waiting on Mysti to confirm.
+
+assets-source/photos-original/ai-exterior-front.png          exterior-front
+assets-source/photos-original/ai-staged-living-fireplace.png living-fireplace
+assets-source/photos-original/ai-staged-living-dining.png    living-dining
+assets-source/photos-original/ai-kitchen.png                 kitchen
+assets-source/photos-original/ai-staged-primary-bedroom.png  primary-bedroom
+assets-source/photos-original/high-res-3-pool.jpg            pool
+assets-source/photos-original/high-res-8-side-yard.jpg       side-yard

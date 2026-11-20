@@ -269,16 +269,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .gal__item:hover figcaption,.gal__item:focus-visible figcaption{opacity:1}
 .gal__item[hidden]{display:none}
+.gal__item picture{height:100%}
+/* An altered image keeps its disclosure visible, not only on hover. */
+.gal__item[data-altered] figcaption{opacity:1}
 @media (hover:none){ .gal__item figcaption{opacity:1} }
 
 /* Lightbox */
-.lb{position:fixed;inset:0;z-index:100;background:rgba(9,12,13,.97);display:grid;grid-template-rows:auto 1fr auto;padding:0}
+.lb{position:fixed;inset:0;z-index:100;background:rgba(9,12,13,.97);display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:0}
 .lb[hidden]{display:none}
 .lb__top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem clamp(12px,3vw,26px);color:#fff}
 .lb__count{font-family:var(--font-label);font-size:.7rem;letter-spacing:.14em;color:rgba(255,255,255,.7)}
 .lb__x{width:44px;height:44px;display:grid;place-items:center;color:#fff;font-size:1.5rem;line-height:1}
 .lb__stage{position:relative;display:grid;place-items:center;min-height:0;padding:0 clamp(8px,2vw,20px)}
-.lb__stage img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.lb__stage img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;min-height:0}
 .lb__nav{
   position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;
   display:grid;place-items:center;color:#fff;font-size:1.6rem;line-height:1;
