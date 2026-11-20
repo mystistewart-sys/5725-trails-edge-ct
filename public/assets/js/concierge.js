@@ -21,14 +21,14 @@
   var GREETING =
     'Hello — I can answer questions about 5725 Trails Edge Ct. Ask me about the ' +
     'taxes, the layout, parking or the schools. For anything I cannot ' +
-    "confirm, I'll point you to Mysti.";
+    "confirm, I'll point you to Diane.";
 
   var REACH_MYSTI =
-    'Mysti Stewart can answer directly — call or text ' +
-    '<a href="tel:+12142133537">214-213-3537</a> or email ' +
-    '<a href="mailto:mysti.stewart@compass.com">mysti.stewart@compass.com</a>.';
+    'Diane Beaty can answer directly — call or text ' +
+    '<a href="tel:+12148036296">214-803-6296</a> or email ' +
+    '<a href="mailto:diane.beaty@compass.com">diane.beaty@compass.com</a>.';
 
-  /* Visitors always get the same calm hand-off to Mysti. The distinction is for
+  /* Visitors always get the same calm hand-off to Diane. The distinction is for
      whoever is debugging: the real cause goes to the console and, for setup
      problems that only an operator can fix, onto the page itself. */
   var OPERATOR_NOTES = {

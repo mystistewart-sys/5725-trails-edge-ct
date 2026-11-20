@@ -27,7 +27,8 @@
     "lot": "78R",
     "block": "5",
     "legalDescription": "OVERLAND STAGE ESTATES BLOCK 5 LOT 78R",
-    "displayName": "5725 Trails Edge Ct"
+    "displayName": "5725 Trails Edge Ct",
+    "access": "Interstate 20 via SW Green Oaks Blvd (listing driving directions)"
   },
   "listing": {
     "status": "Active",
@@ -56,9 +57,9 @@
     "squareFeet": 2929,
     "squareFeetSource": "Assessor",
     "yearBuilt": 1978,
-    "builder": "[VERIFY] Not recorded",
-    "style": "[VERIFY] Not recorded",
-    "construction": "[VERIFY] Not recorded",
+    "builder": "Not recorded in the MLS",
+    "style": "Not recorded in the MLS",
+    "construction": "Not recorded in the MLS",
     "stories": 2,
     "lotAcres": 0.24,
     "foundation": "Slab",
@@ -67,7 +68,7 @@
     "flooring": "Carpet, Ceramic Tile, Laminate, Tile",
     "heating": "Central, Fireplace(s)",
     "cooling": "Ceiling Fan(s), Central Air, Electric",
-    "waterHeater": "[VERIFY] Not recorded",
+    "waterHeater": "Not recorded in the MLS",
     "fireplaces": 1,
     "fireplaceType": "Gas, Gas Logs",
     "pool": true,
@@ -105,17 +106,18 @@
   },
   "taxes": {
     "parcelId": "02083345",
-    "taxYear": "[VERIFY] from TAD",
-    "marketValue": "[VERIFY] from TAD",
-    "exemptions": "[VERIFY]",
-    "combinedRatePct": "[VERIFY] from TAD",
+    "taxYear": "Not available publicly (TAD account detail requires the owner PIN)",
+    "marketValue": "Not available publicly",
+    "exemptions": "Not recorded in the MLS",
+    "combinedRatePct": "Not published on the site — partial and conflicting public figures",
     "jurisdictions": [],
     "specialAssessments": "PID: No. MUD: No.",
     "notes": [
       "Texas has no Proposition 13-style cap for a new buyer; the homestead cap (10% a year) applies only once a buyer files a homestead exemption. Never present a tax figure as guaranteed."
     ],
     "unexemptTaxMls": 7061,
-    "unexemptTaxMonthly": 588
+    "unexemptTaxMonthly": 588,
+    "estimator": "Removed from the page"
   },
   "schools": {
     "district": "Arlington ISD",
@@ -132,15 +134,12 @@
     "pullQuoteSource": "Final sentence of the MLS public remarks"
   },
   "notProvided": [
-    "Tarrant Appraisal District account / tax statement",
-    "Photography and hero image",
     "Upgrade schedule",
     "Sale and lease comparables",
     "Floor plan, Matterport, video",
     "Seller's disclosure, survey",
     "Booking calendar links",
     "GA4 measurement ID for this property (the ID supplied, G-QGLE2JPPNS, is already live on 1614 Hubert St)",
-    "Nearby destinations / major roads for the neighborhood section",
     "Water heater, construction material, style, builder (blank in MLS)"
   ],
   "features": {
@@ -188,5 +187,31 @@
       "Underground Utilities"
     ],
     "smartHome": false
+  },
+  "agent": {
+    "name": "Diane Beaty",
+    "mlsRosterName": "Diane McGuinness",
+    "license": "0667532",
+    "phone": "214-803-6296",
+    "email": "diane.beaty@compass.com",
+    "brokerage": "Compass RE Texas, LLC",
+    "brokerageLicense": "9006927",
+    "photo": "/assets/img/agent/diane-beaty"
+  },
+  "neighborhood": {
+    "destinations": [
+      "Sheri Capehart Nature Preserve (formerly Southwest Nature Preserve), 5201 Bowman Springs Rd",
+      "The Parks Mall at Arlington",
+      "Arlington Highlands",
+      "Tierra Verde Golf Club, 7005 Golf Club Dr",
+      "Interstate 20",
+      "Arlington Entertainment District (AT&T Stadium, Globe Life Field, Six Flags Over Texas)"
+    ],
+    "sources": [
+      "arlingtontx.gov park finder pages",
+      "neighborhoods.com/overland-stage-estates-arlington-tx",
+      "nearby Overland Stage Estates listing remarks"
+    ],
+    "distancesPublished": false
   }
 }

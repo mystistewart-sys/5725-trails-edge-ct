@@ -107,18 +107,6 @@ await t('price per sq ft equals price ÷ square feet', async () => {
   const want = '$' + (FACT.price / FACT.sqft).toFixed(2);
   return shown === want || `page says ${shown}, price ÷ sqft is ${want}`;
 }, [FACT.price, FACT.sqft]);
-await t('tax estimator defaults to the list price', async () =>
-  (await page.inputValue('#calcPrice')) === usd0(FACT.price) || `got ${await page.inputValue('#calcPrice')}`, [FACT.price, FACT.taxRate]);
-await t('estimator annual figure equals price × combined rate', async () => {
-  const shown = (await txt('#calcYear')).trim();
-  const want = usd0(FACT.price * FACT.taxRate);
-  return shown === want || `page says ${shown}, computed ${want}`;
-}, [FACT.price, FACT.taxRate]);
-await t('estimator monthly figure is the annual ÷ 12', async () => {
-  const shown = (await txt('#calcMonth')).trim();
-  const want = usd0(FACT.price * FACT.taxRate / 12);
-  return shown === want || `page says ${shown}, computed ${want}`;
-}, [FACT.price, FACT.taxRate]);
 await t('structured data carries the same price', async () => {
   const p = await page.evaluate(() => JSON.parse(
     document.querySelector('script[type="application/ld+json"]').textContent)
@@ -147,17 +135,6 @@ await t('no unexpected six-figure amount (catches a price left behind)', async (
 });
 
 section('tax figures reconcile');
-await t('assessed value × rate equals the published annual tax', async () => {
-  const got = FACT.assessed * FACT.taxRate;
-  return Math.abs(got - FACT.annualTaxOnAssessed) < 0.02 || `computed ${got.toFixed(2)}`;
-}, [FACT.assessed, FACT.taxRate, FACT.annualTaxOnAssessed]);
-await t('the five jurisdiction amounts sum to the same total', async () => {
-  const sum = FACT.jurisdictions.reduce((a, b) => a + b, 0);
-  return Math.abs(sum - FACT.annualTaxOnAssessed) < 0.02 || `sum is ${sum.toFixed(2)}`;
-}, [FACT.jurisdictions, FACT.annualTaxOnAssessed]);
-await t(`HOA shown as ${usd0(FACT.hoaMonthly)} / month`, async () =>
-  (await page.locator('.cost__fig').first().innerText()).includes(usd0(FACT.hoaMonthly)), [FACT.hoaMonthly]);
-
 await t('property tax card shows the MLS figure and its monthly equivalent', async () => {
   const cell = await page.evaluate(() => [...document.querySelectorAll('.cost__cell')]
     .find((c) => /Property Tax/.test(c.querySelector('h3').textContent)).innerText);
@@ -167,12 +144,29 @@ await t('property tax card shows the MLS figure and its monthly equivalent', asy
 
 section('privacy');
 await t('no confidential MLS field reaches the page source', async () => {
-  // Owner surname, private remarks, keybox brand, showing service and its line,
+  // Owner first names, private remarks, keybox brand, showing service and its line,
   // and occupancy status are in the agent report and must never be published.
   const html = (await page.content()).toLowerCase();
-  const leaks = ['beaty', 'daughter in law', 'supra', 'brokerbay', '257-1242', 'vacant']
+  const leaks = ['dennis', 'barbara', 'daughter in law', 'supra', 'brokerbay', '257-1242', 'vacant']
     .filter((w) => html.includes(w));
   return leaks.length === 0 || `found: ${leaks.join(', ')}`;
+});
+
+await t('HOA shows as None', async () => {
+  const cell = await page.evaluate(() => [...document.querySelectorAll('.cost__cell')]
+    .find((c) => /^HOA/.test(c.querySelector('h3').textContent)).innerText);
+  return /None/.test(cell) || cell;
+});
+await t('no tax estimator is published without a verified rate breakdown', async () =>
+  (await page.locator('#calcPrice').count()) === 0 || 'estimator markup is on the page');
+await t('no [VERIFY] marker reaches the page', async () =>
+  !(await page.content()).includes('[VERIFY]') || 'a [VERIFY] marker is still on the page');
+
+await t('every nav link points at a section that exists and has content', async () => {
+  const missing = await page.evaluate(() => [...document.querySelectorAll('.nav__links a')]
+    .map((a) => a.getAttribute('href'))
+    .filter((h) => { const el = document.querySelector(h); return !el || el.innerText.trim().length < 40; }));
+  return missing.length === 0 || `missing or empty: ${missing.join(', ')}`;
 });
 
 section('core property facts');

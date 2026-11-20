@@ -154,10 +154,15 @@
   }
 
   /* ----------------------------- Places ------------------------------ */
-  /* [VERIFY] Nearby destinations — only places named in the listing remarks or
-     independently verifiable. No drive times or distances. */
+  /* Verifiable public places only (City of Arlington park pages, listing sources).
+     No drive times or distances are published. */
   var PLACES = [
-    ['<span class="vfy">[VERIFY]</span>', 'Nearby destinations pending the property intake.']
+    ['Sheri Capehart Nature Preserve', 'City of Arlington nature preserve on Bowman Springs Road, formerly the Southwest Nature Preserve, with walking trails.'],
+    ['The Parks Mall at Arlington', 'Regional shopping mall on the Interstate 20 corridor.'],
+    ['Arlington Highlands', 'Open-air shopping, dining and entertainment center off Interstate 20.'],
+    ['Tierra Verde Golf Club', 'City of Arlington public golf course in south Arlington.'],
+    ['Interstate 20', 'Reached by way of SW Green Oaks Boulevard.'],
+    ['Arlington Entertainment District', 'Home to AT&amp;T Stadium, Globe Life Field and Six Flags Over Texas.']
   ];
   var places = $('#places');
   if (places) {
@@ -294,8 +299,8 @@
   }
 
   /* --------------------------- Tax estimator -------------------------- */
-  /* [VERIFY] Combined tax rate per $1 of value, from the appraisal district
-     account (sum of every jurisdiction). 0 keeps the estimator inactive. */
+  /* The estimator markup is not on this page (no verified rate breakdown), so
+     this block is inert. Set RATE and restore the markup to bring it back. */
   var RATE = 0;
   var priceEl = $('#calcPrice'), yEl = $('#calcYear'), mEl = $('#calcMonth');
   var usd0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
@@ -362,13 +367,13 @@
         if (!r.ok) throw new Error('HTTP ' + r.status);
         form.reset();
         status.hidden = false;
-        status.textContent = 'Thank you — your request is on its way to Mysti. You will hear back shortly. For anything urgent, call or text 214-213-3537.';
+        status.textContent = 'Thank you — your request is on its way to Diane. You will hear back shortly. For anything urgent, call or text 214-803-6296.';
         submitBtn.textContent = 'Request Sent';
         track('form_submit_success', { intent: intent });
       })
       .catch(function () {
         status.hidden = false;
-        status.textContent = 'Something went wrong sending that. Please call or text Mysti at 214-213-3537, or email mysti.stewart@compass.com.';
+        status.textContent = 'Something went wrong sending that. Please call or text Diane at 214-803-6296, or email diane.beaty@compass.com.';
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send Request';
         track('form_submit_error', { intent: intent });

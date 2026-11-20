@@ -1,19 +1,18 @@
 # 5725 Trails Edge Ct — Single-Property Website
 
 Site for **5725 Trails Edge Ct, Arlington, TX 76017** (MLS 21401750),
-presented by **Mysti Stewart**, Mysti Stewart Group, Compass RE Texas, LLC.
-Listing agent of record: Diane McGuinness, Compass RE Texas, LLC.
+listed by **Diane Beaty** (TX #0667532), Compass RE Texas, LLC, on the Mysti Stewart Group site template.
+(The NTREIS roster still shows her as Diane McGuinness.)
 
-> **Status: MLS facts in; photos, TAD detail and GA4 pending.** Built from the 5710-mccommas-blvd-101
-> template. Every property fact renders as a red `[VERIFY]` marker until it is
-> sourced from the intake documents, the photos are labelled placeholders, the
-> page is `noindex`, and no analytics load. See `data/property.json` →
-> `notProvided` for what is still needed.
+> **Status: content complete; not yet deployed.** Facts from MLS #21401750,
+> neighborhood from City of Arlington and listing sources, photography from the
+> seller's set (5 of 7 images AI-staged/enhanced and labelled as such).
+> The property tax estimator is deliberately removed: TAD account detail needs
+> the owner PIN and published rates were partial/conflicting.
 >
-> **Before launch:** fill every `[VERIFY]` (`grep -rn VERIFY public netlify`),
-> set the facts in `tests/check.mjs` so nothing reports SKIP, switch the robots
-> meta back to `index,follow,max-image-preview:large`, add this property's own
-> GA4 snippet, and run `node tools/set-domain.mjs <domain>`.
+> **Before launch:** switch the robots meta back to
+> `index,follow,max-image-preview:large`, add this property's own GA4 snippet,
+> and run `node tools/set-domain.mjs <domain>`.
 
 Static HTML/CSS/JS with one Netlify serverless function for the AI concierge.
 No framework, no build step, no runtime dependencies.
